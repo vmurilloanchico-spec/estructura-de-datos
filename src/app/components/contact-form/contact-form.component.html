@@ -1,0 +1,15 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="contact-form">
+  <h2>{{ contact ? 'Editar contacto' : 'Nuevo contacto' }}</h2>
+  <label>Nombre
+    <input formControlName="name" placeholder="Ej. María Pérez" />
+    @if (form.controls.name.touched && form.controls.name.invalid) { <small>Escribe un nombre de al menos 2 caracteres.</small> }
+  </label>
+  <label>Teléfono
+    <input formControlName="phone" type="tel" placeholder="Ej. +57 300 000 0000" />
+    @if (form.controls.phone.touched && form.controls.phone.invalid) { <small>Ingresa un teléfono válido.</small> }
+  </label>
+  <div class="form-actions">
+    @if (contact) { <button type="button" class="secondary" (click)="cancelled.emit()">Cancelar</button> }
+    <button type="submit">{{ contact ? 'Guardar cambios' : 'Agregar contacto' }}</button>
+  </div>
+</form>

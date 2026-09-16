@@ -1,0 +1,9 @@
+<main class="page-shell">
+  <header><p class="eyebrow">DIRECTORIO PERSONAL</p><h1>Mis contactos</h1><p>Organiza las personas importantes para ti.</p></header>
+  @if (loading) { <app-loader /> } @else {
+    <section class="dashboard">
+      <app-contact-form [contact]="editing" (saved)="save($event)" (cancelled)="editing = null" />
+      <section class="contacts-panel"><div class="panel-heading"><h2>Contactos</h2><span>{{ contacts.length }}</span></div><app-contact-list [contacts]="contacts" (edit)="editing = $event" (remove)="remove($event)" /></section>
+    </section>
+  }
+</main>

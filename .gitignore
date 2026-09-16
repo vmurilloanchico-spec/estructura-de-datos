@@ -1,0 +1,14 @@
+# Angular build output and cache
+/dist
+/.angular
+
+# Dependencies
+/node_modules
+
+# Editor and operating system files
+/.vscode
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

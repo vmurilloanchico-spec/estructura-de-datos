@@ -1,0 +1,11 @@
+@if (contacts.length) {
+  <ul class="contact-list">
+    @for (contact of contacts; track contact.id) {
+      <li>
+        <div class="avatar">{{ contact.name.charAt(0) }}</div>
+        <div class="contact-info"><strong>{{ contact.name }}</strong><span>{{ contact.phone }}</span></div>
+        <div class="card-actions"><button class="icon-button" title="Editar" (click)="edit.emit(contact)">✎</button><button class="icon-button danger" title="Eliminar" (click)="remove.emit(contact.id)">×</button></div>
+      </li>
+    }
+  </ul>
+} @else { <p class="empty">Aún no hay contactos. Agrega el primero.</p> }
