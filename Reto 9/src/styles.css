@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #222;
+  font-family: Arial, sans-serif;
+}
+
+main h1 {
+  margin-top: 0;
+  color: #245c76;
+}
