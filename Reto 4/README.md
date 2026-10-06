@@ -1,6 +1,6 @@
 # Reto 4 · Pila de libros
 
-Aplicación React + TypeScript para practicar una pila LIFO de libros.
+Aplicación React + TypeScript para practicar una pila de libros (LIFO).
 
 ## Ejecutar
 
@@ -9,4 +9,4 @@ npm install
 npm run dev
 ```
 
-Cada libro guarda título, ISBN, autor y editorial. El formulario hace `push` en la cima; el botón de papelera retira el libro superior (`pop`). «Imprimir lista» abre la vista de impresión del inventario.
+Cada libro guarda nombre, ISBN, autor y editorial. Al agregar un libro se coloca en la cima de la pila. El botón «Quitar el último» saca el último libro agregado. También se puede imprimir la lista.
