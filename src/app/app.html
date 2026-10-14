@@ -1,0 +1,127 @@
+﻿<div class="app-shell">
+  <header class="topbar">
+    <div class="title-block">
+      <span class="eyebrow">Sistema jerárquico</span>
+      <h1>Gestión de carpetas y archivos</h1>
+    </div>
+
+    <div class="auth-card">
+      @if (currentUser(); as user) {
+        <div class="logged-user">
+          <div class="avatar">{{ user.name.charAt(0).toUpperCase() }}</div>
+          <div class="user-meta">
+            <strong>{{ user.name }}</strong>
+            <small>{{ user.email }}</small>
+          </div>
+          <button type="button" class="ghost-button" (click)="logout()">Cerrar sesión</button>
+        </div>
+      } @else {
+        <form class="login-form" (ngSubmit)="loginUser()">
+          <label>
+            Correo
+            <input type="email" [(ngModel)]="loginForm.email" name="login-email" required />
+          </label>
+          <label>
+            Contraseña
+            <input type="password" [(ngModel)]="loginForm.password" name="login-password" required />
+          </label>
+          <button type="submit" class="primary-button">Ingresar</button>
+        </form>
+      }
+    </div>
+  </header>
+
+  @if (errorMessage() || successMessage()) {
+    <div class="status-message" [class.error]="errorMessage()" [class.success]="successMessage()">
+      {{ errorMessage() ?? successMessage() }}
+    </div>
+  }
+
+  <main class="workspace">
+    <aside class="tree-panel">
+      <div class="section-header">
+        <h2>Árbol n-ario</h2>
+        <span>{{ treeRows().length }} elementos</span>
+      </div>
+
+      <div class="tree-list">
+        @for (node of treeRows(); track node.id) {
+          <div class="tree-row" [class.selected]="node.id === selectedNodeId()" (click)="selectNode(node.id)">
+            <span class="tree-indent" [style.width.px]="node.depth * 18"></span>
+            <span class="tree-icon">{{ node.type === 'folder' ? '📁' : '📄' }}</span>
+            <span class="tree-name">{{ node.name }}</span>
+            @if (node.type === 'folder') {
+              <span class="tree-badge">{{ node.children.length }} hijos</span>
+            } @else {
+              <span class="tree-badge">Archivo</span>
+            }
+            @if (node.id !== 'root') {
+              <button type="button" class="remove-button" (click)="deleteNode(node.id); $event.stopPropagation()">✕</button>
+            }
+          </div>
+        }
+      </div>
+    </aside>
+
+    <section class="control-panel">
+      <div class="section-header">
+        <h2>Gestión</h2>
+        <span>{{ selectedNode() ? (selectedNode()?.type === 'folder' ? 'Carpeta' : 'Archivo') : 'Raíz' }}</span>
+      </div>
+
+      @if (selectedNode(); as node) {
+        <div class="node-card">
+          <div class="node-header">
+            <span class="node-type">{{ node.type === 'folder' ? 'Carpeta' : 'Archivo' }}</span>
+            <h3>{{ node.name }}</h3>
+          </div>
+
+          <ul class="node-details">
+            <li><span>ID</span><strong>{{ node.id }}</strong></li>
+            <li><span>Creado por</span><strong>{{ node.createdBy }}</strong></li>
+            <li><span>Fecha</span><strong>{{ node.createdAt | date: 'dd/MM/yyyy HH:mm' }}</strong></li>
+          </ul>
+        </div>
+      } @else {
+        <p class="empty-state">Selecciona un nodo para consultar su información.</p>
+      }
+
+      <div class="creator-panel">
+        <label class="field-label">
+          Nombre del nuevo elemento
+          <input type="text" [(ngModel)]="newItemName" name="new-element-name" placeholder="Ej. contratos" />
+        </label>
+
+        <div class="action-buttons">
+          <button type="button" class="primary-button" [disabled]="!canCreate()" (click)="createFolder()">+ Carpeta</button>
+          <button type="button" class="secondary-button" [disabled]="!canCreate()" (click)="createFile()">+ Archivo</button>
+        </div>
+
+        @if (!canCreate()) {
+          <p class="helper-text">Debes iniciar sesión con un usuario registrado para poder crear carpetas o archivos.</p>
+        }
+      </div>
+
+      <div class="register-panel">
+        <h3>Registrar nuevo usuario</h3>
+
+        <form class="register-form" (ngSubmit)="registerUser()">
+          <label>
+            Nombre
+            <input type="text" [(ngModel)]="registerForm.name" name="register-name" required />
+          </label>
+          <label>
+            Correo
+            <input type="email" [(ngModel)]="registerForm.email" name="register-email" required />
+          </label>
+          <label>
+            Contraseña
+            <input type="password" [(ngModel)]="registerForm.password" name="register-password" required />
+          </label>
+
+          <button type="submit" class="secondary-button">Registrar</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
