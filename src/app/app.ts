@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { ListaPacientes } from './estructuras/lista-pacientes';
 import { Paciente } from './modelos/paciente';
 import { HistorialAtencion } from './estructuras/historial-atencion';
@@ -8,7 +9,7 @@ import { ListaCircularComite } from './estructuras/lista-circular-comite';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
