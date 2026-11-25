@@ -1,0 +1,18 @@
+* {box-sizing:border-box}
+body {margin:0;background:#f4f1f8;color:#241931;font:16px/1.5 'DM Sans',system-ui,sans-serif}
+main {max-width:1100px;margin:auto;padding:clamp(28px,6vw,76px) 22px}
+header {display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;border-bottom:3px solid #3d2954;padding-bottom:18px}
+h1 {font:600 clamp(40px,6vw,76px)/1.1 Georgia,serif;margin:0;letter-spacing:-.045em}
+a {color:#4f3370}
+form {margin:36px 0 12px}
+label {font-weight:650;display:block;margin-bottom:8px}
+.row {display:flex;max-width:700px;gap:10px}
+input,button {font:inherit;border-radius:8px;padding:12px 14px}
+input {flex:1;min-width:0;border:1px solid #9684a3;background:white}
+button {background:#523074;color:white;border:0;cursor:pointer;font-weight:bold}
+button:disabled {opacity:.5;cursor:default}
+.notice {color:#633610}
+section {display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:16px;align-items:start}
+figure {background:white;margin:0;border-radius:10px;border:1px solid #ded6e5;overflow:hidden}
+figure a,img {display:block;width:100%}
+figcaption {padding:10px 12px;font-size:14px}small {display:block;color:#584860}

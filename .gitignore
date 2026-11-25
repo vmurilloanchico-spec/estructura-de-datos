@@ -1,0 +1,5 @@
+.env
+src/config.generated.ts
+node_modules/
+.angular/
+dist/

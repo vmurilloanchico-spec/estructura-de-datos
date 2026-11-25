@@ -1,0 +1,15 @@
+<main>
+  <header><h1>Buscador de GIFs</h1><a href="https://giphy.com/" target="_blank" rel="noopener">Powered by GIPHY</a></header>
+  <form (submit)="search($event, term.value)">
+    <label for="term">¿Qué GIF quieres encontrar?</label>
+    <div class="row"><input #term id="term" type="search" maxlength="50" required placeholder="Ej. smile"><button [disabled]="!ready">Buscar</button></div>
+  </form>
+  @if (!ready) {<p class="notice">Agrega tu clave de GIPHY en el archivo .env y reinicia la aplicación con npm start.</p>}
+  <p role="status">{{message()}}</p>
+  <section aria-label="Resultados de búsqueda">
+    @for (gif of gifs(); track gif.id) {
+      <figure><a [href]="gif.url" target="_blank" rel="noopener"><img [src]="gif.images.fixed_width?.url || gif.images.original?.url" [alt]="gif.title || 'Ver GIF en GIPHY'" loading="lazy"></a>
+      <figcaption>{{gif.title || 'GIF de GIPHY'}} @if (gif.username) {<small>Por {{gif.username}}</small>}</figcaption></figure>
+    }
+  </section>
+</main>
