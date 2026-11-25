@@ -1,0 +1,19 @@
+<main>
+  <header><div><p class="brand">Frecuencia</p><h1>Panel musical</h1><p class="intro">Catálogo de música educativa · {{canciones.length}} canciones</p></div><div class="disc" aria-hidden="true"></div></header>
+  <div class="columns">
+    <section class="ranking"><div class="heading"><h2>Más escuchadas</h2><label>Mostrar<select [(ngModel)]="cantidad" (ngModelChange)="actualizarRanking()"><option [ngValue]="3">Top 3</option><option [ngValue]="5">Top 5</option><option value="todas">Todas</option></select></label></div>
+      <table><thead><tr><th>Puesto</th><th>Canción</th><th>Escuchas</th></tr></thead><tbody>@for (c of ranking; track c.titulo) {<tr><td>{{$index + 1}}</td><td>{{c.titulo}}</td><td>{{c.escuchas}}</td></tr>}</tbody></table>
+    </section>
+    <section><h2>Buscar una canción</h2><form (ngSubmit)="comprobar()" ngNativeValidate>
+      <label>Título o prefijo<input name="prefijo" required [ngModel]="prefijo" (ngModelChange)="predecir($event)" placeholder="Ej. rit" autocomplete="off"></label>
+      <button>Comprobar título exacto</button></form>
+      @if (prefijo.trim()) {<h3>Sugerencias</h3><div class="chips">@for(c of sugerencias;track c.titulo){<button (click)="predecir(c.titulo); comprobar()">{{c.titulo}}</button>} @empty {<span>Sin coincidencias.</span>}</div>}
+      <p role="status">{{consulta}}</p>
+    </section>
+  </div>
+  <section class="recommend"><h2>Recomendaciones</h2><label>Canción de referencia<select [ngModel]="seleccion" (ngModelChange)="verRelacionadas($event)">@for(c of canciones;track c.titulo){<option [value]="c.titulo">{{c.titulo}}</option>}</select></label>
+    <h3>Relacionadas con «{{seleccion}}»</h3><div class="chips">@for(t of relacionadas;track t){<button (click)="verRelacionadas(t)">{{t}}</button>} @empty {<span>Esta canción todavía no tiene conexiones.</span>}</div>
+  </section>
+  <div class="columns"><section><h2>Agregar canción</h2><form (ngSubmit)="guardar()" ngNativeValidate><label>Título nuevo<input name="titulo" [(ngModel)]="titulo" required></label><label>Escuchas iniciales<input name="escuchas" type="number" min="0" step="1" [(ngModel)]="escuchas" required></label><button>Guardar canción</button></form><p role="status">{{avisoCancion}}</p></section>
+    <section><h2>Conectar canciones</h2><form (ngSubmit)="conectar()" ngNativeValidate><label>Primera canción<select name="origen" [(ngModel)]="origen" required><option value="">Selecciona una canción</option>@for(c of canciones;track c.titulo){<option [value]="c.titulo">{{c.titulo}}</option>}</select></label><label>Segunda canción<select name="destino" [(ngModel)]="destino" required><option value="">Selecciona una canción</option>@for(c of canciones;track c.titulo){<option [value]="c.titulo">{{c.titulo}}</option>}</select></label><button>Guardar relación</button></form><p role="status">{{avisoRelacion}}</p></section></div>
+</main>

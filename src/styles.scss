@@ -1,0 +1,25 @@
+@use 'tema' as t;
+* { box-sizing:border-box }
+body { margin:0; background:t.$fondo; color:t.$tinta; font:16px/1.45 'DM Sans',system-ui,sans-serif }
+main { max-width:1080px; margin:auto; padding:24px 18px 55px }
+header { isolation:isolate; position:relative; overflow:hidden; background:#1c342a; color:#fffde9; border-radius:18px; padding:clamp(24px,5vw,55px); margin-bottom:18px;
+  .brand { color:t.$acento; font-weight:650; margin:0 0 18px; }
+  h1 { font:clamp(45px,7vw,76px)/1 Georgia,serif; letter-spacing:-.055em; margin:0 }
+  .intro { margin:14px 0 0 }
+}
+.disc { position:absolute; z-index:-1; top:-95px; right:-40px; width:385px; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,#1c342a 0 2%,#c7ec69 2% 20%,transparent 20%),repeating-radial-gradient(circle,#38624b 0 2px,#264633 3px 6px); }
+.columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px }
+section { @include t.tarjeta; min-width:0 }
+.recommend { margin:16px 0; select { max-width:450px } }
+h2 { font:clamp(25px,3vw,33px)/1.1 Georgia,serif; margin:0 0 18px }
+h3 { font-size:15px; margin:16px 0 8px }
+form,label { display:grid; gap:6px }
+form { gap:14px; align-content:start }
+label { font-size:14px; font-weight:650 }
+input,select { @include t.control; width:100%; min-width:0; border:1px solid #94a28d; background:white; color:t.$tinta }
+button { @include t.control; border:1px solid #203f2e; color:white; background:#244c36; cursor:pointer; font-weight:650; justify-self:start }
+.chips { display:flex; gap:8px; flex-wrap:wrap; button { background:#eaf3d8; color:t.$tinta; border-color:#becea9; overflow-wrap:anywhere } }
+.heading { display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; h2 {margin:0} }
+table { width:100%; border-collapse:collapse; margin-top:18px; td,th { text-align:left; padding:12px 5px; border-bottom:1px solid t.$borde; overflow-wrap:anywhere } th { font-size:13px } td:last-child,th:last-child { text-align:right } tbody tr:first-child { background:#edf5d8 } }
+[role=status]:empty {display:none}
+@media(max-width:680px) { .columns {grid-template-columns:1fr} .disc {right:-225px;opacity:.38} }

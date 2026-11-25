@@ -1,0 +1,24 @@
+{
+  "name": "parcial-3",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "ng serve --port 4214",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/common": "20.3.9",
+    "@angular/compiler": "20.3.9",
+    "@angular/core": "20.3.9",
+    "@angular/forms": "20.3.9",
+    "@angular/platform-browser": "20.3.9",
+    "rxjs": "7.8.2",
+    "tslib": "2.8.1"
+  },
+  "devDependencies": {
+    "@angular/build": "20.3.9",
+    "@angular/cli": "20.3.9",
+    "@angular/compiler-cli": "20.3.9",
+    "typescript": "5.9.3"
+  }
+}
