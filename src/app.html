@@ -1,0 +1,28 @@
+<main>
+  <header><strong>Mi cuaderno</strong>@if (userId) {<button (click)="logout()">Cerrar sesión</button>}</header>
+  @if (!userId) {
+    <section><h1>{{ register ? 'Crear cuenta' : 'Iniciar sesión' }}</h1>
+      <form (submit)="auth($event, email.value, password.value)">
+        <label>Correo electrónico<input #email type="email" required autocomplete="email"></label>
+        <label>Contraseña<input #password type="password" required minlength="6" [attr.autocomplete]="register ? 'new-password' : 'current-password'"></label>
+        <button class="primary" [disabled]="busy">{{register ? 'Registrarme' : 'Entrar'}}</button>
+      </form>
+      <button class="link" (click)="register=!register; message=''">{{register ? 'Ya tengo cuenta' : 'Crear una cuenta'}}</button>
+    </section>
+  } @else {
+    <section><div class="profile">@if (avatar) {<img [src]="avatar" alt="Mi avatar">}
+      <label>{{emailAddress}}<input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Cambiar avatar" (change)="upload($event)"></label></div>
+      <h1>Mis tareas</h1><p class="status">{{live}}</p>
+      <form class="row" (submit)="add($event, title)"><input #title required maxlength="160" placeholder="Escribe una tarea" aria-label="Nueva tarea"><button class="primary">Agregar</button></form>
+      <ul>@for (task of tasks; track task.id) {
+        <li>@if (editing===task.id) {
+          <form class="row" (submit)="save($event, task.id, edited.value)"><input #edited required maxlength="160" [value]="task.title" aria-label="Título de la tarea"><button>Guardar</button><button type="button" (click)="editing=''">Cancelar</button></form>
+        } @else {
+          <label class="task"><input type="checkbox" [checked]="task.completed" (change)="toggle(task, $event)"><span [class.done]="task.completed">{{task.title}}</span></label>
+          <button (click)="editing=task.id">Editar</button><button (click)="remove(task)">Eliminar</button>
+        }</li>
+      } @empty {<li>{{loaded ? 'Todavía no tienes tareas.' : 'Cargando tareas…'}}</li>}</ul>
+    </section>
+  }
+  <p role="status" aria-live="polite">{{message}}</p>
+</main>
