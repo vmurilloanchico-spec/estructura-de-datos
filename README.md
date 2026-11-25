@@ -1,59 +1,28 @@
-# Frontend
+# Challenge 11 · Atlas de amistades
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.7.
+Aplicación Angular 20 con una visualización interactiva de personas, ciudades y amistades. Los formularios, las validaciones, los datos y el filtro de habitantes están en Angular. El componente NetworkGraph monta react-d3-graph para dibujar el grafo que pide la consigna.
 
-## Development server
+## Ejecutar en Windows
 
-To start a local development server, run:
+1. Extrae el ZIP en una carpeta nueva llamada Challenge-11. Abre esa carpeta en VS Code. Los archivos angular.json y package.json deben aparecer juntos.
+2. Usa Node.js 22.12 o superior de la rama 22, o Node.js 24. Abre Terminal → Nueva terminal.
+3. Ejecuta npm ci. Cuando termine, ejecuta npm start.
+4. Abre http://localhost:4200 o la dirección que muestre Angular en la terminal.
 
-```bash
-ng serve
-```
+Los datos de ejemplo ya están cargados. Los cambios se guardan en el navegador para esa dirección. Para generar la versión de producción ejecuta npm run build.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Prueba para la entrega
 
-## Code scaffolding
+1. Selecciona Cali en Habitantes por ciudad. Deben aparecer Ana (21) y Mateo (24).
+2. Agrega Palmira en Nueva ciudad. Aparece como un rombo y la lista de habitantes está vacía.
+3. Agrega a Valeri, de 21 años, con Palmira como residencia. Aparece un círculo conectado a Palmira y la consulta de esa ciudad muestra a Valeri.
+4. En Nueva amistad selecciona a Valeri y Ana. Verás una línea de amistad entre ellas. La residencia de cada una permanece en su ciudad.
+5. Intenta crear esa amistad en el orden inverso. El sistema indica que ya existe.
+6. Selecciona Palmira y pulsa Imprimir lista. La vista de impresión muestra la ciudad y sus habitantes. Puedes elegir Guardar como PDF en el navegador.
+7. Recarga la página y selecciona Palmira otra vez. La persona y la amistad siguen guardadas.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Para explicar el código
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- src/model.ts define City, Person, Friendship y los datos iniciales. Cada persona guarda un solo cityId, que identifica su ciudad.
+- src/main.ts y src/app.html controlan los formularios y la consulta. La lista se obtiene filtrando las personas con el cityId seleccionado.
+- src/network-graph.ts convierte cada persona y ciudad en un nodo. Genera una conexión por residencia y otra por cada amistad entre dos personas. Los identificadores permiten tener personas con el mismo nombre.

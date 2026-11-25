@@ -1,0 +1,32 @@
+<main>
+  <header><h1>Atlas de amistades</h1><p>{{network().people.length}} personas · {{network().cities.length}} ciudades · {{network().friendships.length}} amistades</p></header>
+  <div class="workspace">
+    <section class="map">
+      <h2>Red de amigos y ciudades</h2>
+      <div class="legend"><span><i class="diamond"></i>Ciudad</span><span><i class="circle"></i>Persona</span><span><i class="line home"></i>Vive en</span><span><i class="line friend"></i>Amistad</span></div>
+      <div class="canvas" role="region" aria-label="Grafo de personas y ciudades" tabindex="0"><network-graph [network]="network()" /></div>
+      <small>Arrastra los nodos para reorganizar la vista.</small>
+    </section>
+    <section class="query">
+      <h2>Habitantes por ciudad</h2>
+      <label class="filter">Ciudad a consultar<select [ngModel]="selectedCity()" (ngModelChange)="selectedCity.set($event)">@for (c of network().cities;track c.id){<option [value]="c.id">{{c.name}}</option>}</select></label>
+      <h3>{{city().name}} <span>({{residents().length}})</span></h3>
+      <ul>@for (p of residents();track p.id){<li><b>{{p.name}}</b><span>{{p.age}} años</span></li>} @empty {<li>Esta ciudad aún no tiene personas registradas.</li>}</ul>
+      <button class="outline" (click)="printList()">Imprimir lista</button>
+    </section>
+  </div>
+  <div class="forms">
+    <form (ngSubmit)="addCity()" ngNativeValidate><h2>Nueva ciudad</h2>
+      <label>Nombre de la ciudad<input name="city" [(ngModel)]="cityName" required placeholder="Ej. Palmira"></label><button>Agregar ciudad</button></form>
+    <form (ngSubmit)="addPerson()" ngNativeValidate><h2>Nueva persona</h2>
+      <label>Nombre de la persona<input name="person" [(ngModel)]="personName" required></label>
+      <label>Edad<input name="age" type="number" min="0" step="1" [(ngModel)]="age" required></label>
+      <label>Ciudad de residencia<select name="residence" [(ngModel)]="residence" required>@for (c of network().cities;track c.id){<option [value]="c.id">{{c.name}}</option>}</select></label>
+      <button>Agregar persona</button></form>
+    <form (ngSubmit)="addFriendship()" ngNativeValidate><h2>Nueva amistad</h2>
+      <label>Primera persona<select name="first" [(ngModel)]="first" required><option value="">Seleccionar</option>@for (p of network().people;track p.id){<option [value]="p.id">{{p.name}} · {{p.age}} años</option>}</select></label>
+      <label>Segunda persona<select name="second" [(ngModel)]="second" required><option value="">Seleccionar</option>@for (p of network().people;track p.id){<option [value]="p.id">{{p.name}} · {{p.age}} años</option>}</select></label>
+      <button>Conectar personas</button></form>
+  </div>
+  <p role="status">{{message}}</p>
+</main>
