@@ -1,59 +1,34 @@
-# Frontend
+# Challenge 12 · Buscador de productos en Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.7.
+## Abrir en Windows
 
-## Development server
+Extrae el ZIP y abre en VS Code la carpeta donde se encuentran angular.json y package.json. Usa Node.js 22.12 o posterior de la rama 22, o Node.js 24. En Terminal → Nueva terminal ejecuta:
 
-To start a local development server, run:
-
-```bash
-ng serve
+```powershell
+npm ci --include=dev
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abre http://localhost:4200 o la dirección Local que aparezca. Si ya estás usando el puerto 4200 para el Challenge 11, puedes iniciar este con `npm start -- --port 4201` y abrir http://localhost:4201.
 
-## Code scaffolding
+## Prueba del enunciado
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+El catálogo inicial tiene air max (90), air force (95), air jordan (85) y adidas boost (80). Cada registro guarda name y popularity. Se usa 90 para air max porque es el valor de la inserción y del resultado esperado en la diapositiva.
 
-```bash
-ng generate component component-name
-```
+| Prefijo | K | Resultado, de mayor a menor popularidad |
+| --- | --- | --- |
+| air | 2 | air force 95, air max 90 |
+| AIR | 3 | air force 95, air max 90, air jordan 85 |
+| ad | 2 | adidas boost 80 |
+| max | 2 | Sin coincidencias |
+| vacío | 1 | air force 95 |
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Agrega air zoom con popularidad 98 y vuelve a buscar air con K = 2. El nuevo resultado es air zoom (98) y air force (95). Guarda otra vez air zoom con 70 y verifica que vuelve a salir el par original y que el contador se mantiene en cinco. Al recargar se restablecen los cuatro productos del ejemplo.
 
-```bash
-ng generate --help
-```
+## Cómo sustentarlo
 
-## Building
+El Trie es un árbol de prefijos. Al insertar air max y air force comparten el camino a → i → r. El producto completo queda guardado en el nodo donde termina su nombre. Para buscar, primero se recorre el prefijo y después se visitan únicamente los nodos que cuelgan de él.
 
-To build the project run:
+El min-heap mantiene como máximo K productos. La raíz contiene el peor de los seleccionados. Cuando llega un candidato mejor y ya hay K elementos, reemplaza esa raíz. Al final se extraen los productos y se invierte su orden para mostrarlos de mayor a menor popularidad. En un empate se favorece el nombre que aparece primero alfabéticamente.
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+El código de ambas estructuras y de searchTopK está en src/search.ts. Los formularios y la conexión con Angular están en src/main.ts y src/app.html.

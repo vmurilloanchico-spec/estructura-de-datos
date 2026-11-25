@@ -1,0 +1,28 @@
+<main>
+  <header><h1>Buscador de productos</h1><p>{{catalog.size}} productos en el catálogo</p></header>
+  <div class="grid">
+    <section><h2>Buscar por prefijo</h2>
+      <div class="filters">
+        <label>Inicio del nombre<input type="search" [ngModel]="prefix" (ngModelChange)="prefix=$event; search()" placeholder="Ej. air"></label>
+        <label>Top K<input type="number" min="1" step="1" [ngModel]="k" (ngModelChange)="k=$event; search()"></label>
+      </div>
+      <p class="help">K indica cuántos resultados quieres ver. Borra el prefijo para consultar todo el catálogo.</p>
+      <div aria-live="polite">
+        @if (!validK) {<p>Escribe un número entero mayor que cero en Top K.</p>}
+        @else if (!results.length) {<p>Ningún producto empieza por «{{prefix}}».</p>}
+        @else {
+          <table><caption>Resultados por popularidad</caption><thead><tr><th>Producto</th><th>Popularidad</th></tr></thead>
+          <tbody>@for (product of results; track product.name) {
+            <tr><td>{{product.name}}</td><td>{{product.popularity}}</td></tr>
+          }</tbody></table>
+        }
+      </div>
+    </section>
+    <aside><h2>Agregar producto</h2><form (ngSubmit)="save()" ngNativeValidate>
+      <label>Nombre del producto<input name="name" [(ngModel)]="name" required placeholder="Ej. air zoom"></label>
+      <label>Popularidad<input type="number" name="popularity" [(ngModel)]="popularity" min="0" step="any" required></label>
+      <button>Guardar producto</button>
+    </form><p class="help">Si el nombre ya existe, se actualiza su popularidad. Los cambios duran hasta que recargues la página.</p>
+    <p role="status">{{message}}</p></aside>
+  </div>
+</main>
